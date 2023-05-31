@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 
 import {
   Card,
@@ -11,55 +11,14 @@ import {
   TableBody,
   TableCell,
   Text,
-  Title,
-  Badge,
-  Icon
+  Title
 } from "@tremor/react";
-import { TrendingUpIcon, TrendingDownIcon, MailIcon } from "@heroicons/react/solid";
+import { TrendingUpIcon, TrendingDownIcon } from "@heroicons/react/solid";
 
 import { Census, Utils } from '../../lib';
 
-const prepDataset = async () => {
-  const seriesId = 'LNS13000000';
-  const { Results: { series } } = await Census.fetchSeries([seriesId]);
-
-  return series.find(serie => serie.seriesID === seriesId)?.data || [];
-}
-
-const TableResults = async () => {
-  const data = await useMemo(async () => await prepDataset(), []);
-  // const [data, setData] = useState(dataset);
-
-  return (
-    <TableBody>
-      {data.map((serie, index, dataSet) => {
-        const key = `${index}-${serie.year}-${serie.period}`;
-        const rate = Utils.calcRateChange(serie.value, dataSet[index + 1]?.value);
-        const dir = (rate > 0) ? <TrendingUpIcon className="sm-icon" />
-          : (rate < 0) ? <TrendingDownIcon className="sm-icon" /> : '';
-
-        return (
-          <>
-            <TableRow key={`tr-${key}`}>
-              <TableCell scope="row">
-                <Text>{serie.year}</Text>
-              </TableCell>
-              <TableCell>
-                <Text>{serie.periodName}</Text>
-              </TableCell>
-              <TableCell>
-                <Text>{rate.toFixed(2)}% {dir}</Text>
-              </TableCell>
-            </TableRow>
-          </>
-        );
-      })}
-    </TableBody>
-  );
-};
-
 export default async function Grid() {
-  // const data = await prepDataset();
+  const data = await Census.fetchSerie('LNS13000000');
   console.log('pew pew.1');
 
   return (
@@ -76,7 +35,29 @@ export default async function Grid() {
             </TableRow>
           </TableHead>
 
-          <TableResults />
+          <TableBody>
+            {data.map((serie, index, dataSet) => {
+              const key = `${index}-${serie.year}-${serie.period}`;
+              const dir = (serie.rate > 0) ? <TrendingUpIcon className="sm-icon" />
+                : (serie.rate < 0) ? <TrendingDownIcon className="sm-icon" /> : '';
+
+              return (
+                <>
+                  <TableRow key={`tr-${key}`}>
+                    <TableCell scope="row">
+                      <Text>{serie.year}</Text>
+                    </TableCell>
+                    <TableCell>
+                      <Text>{serie.periodName}</Text>
+                    </TableCell>
+                    <TableCell>
+                      <Text>{rate.toFixed(2)}% {dir}</Text>
+                    </TableCell>
+                  </TableRow>
+                </>
+              );
+            })}
+          </TableBody>
 
         </Table>
       </Card>

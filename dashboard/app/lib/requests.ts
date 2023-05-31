@@ -33,4 +33,27 @@ export class Census {
     }
   }
 
+  static fetchSerie = cache(async (serieId) => {
+    const { Results: { series } } = await Census.fetchSeries([serieId]);
+    // Select requested serie
+    let data = series
+      .find(serie => serie.seriesID === serieId)?.data || [];
+
+      // Transform values
+      data = data.map((serie, idx, dataset) => {
+        serie.rate = Utils.calcRateChange(serie.value, dataset[idx + 1]?.value);
+        serie.charIndex = `${serie.periodName.slice(0, 3)} ${serie.year}`;
+
+        return serie;
+      });
+
+      // Sorting values
+      data.sort((a, b) => {
+        return (a.year > b.year) ? 1 : (a.year < b.year) ? -1
+          : (a.period > b.period) ? 1 : (a.period < b.period) ? -1 : 0;
+      });
+
+      return data;
+  });
+
 }
