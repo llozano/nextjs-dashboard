@@ -1,5 +1,6 @@
 import { cache } from 'react';
 import { CensusResponse } from '../_models/census-response.interface';
+import { Utils } from './utils';
 
 export class Census {
 
@@ -33,7 +34,7 @@ export class Census {
     }
   }
 
-  static fetchSerie = cache(async (serieId) => {
+  static fetchSerie = cache(async (serieId: string) => {
     const { Results: { series } } = await Census.fetchSeries([serieId]);
     // Select requested serie
     let data = series

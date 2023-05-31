@@ -15,7 +15,7 @@ import {
 } from "@tremor/react";
 import { TrendingUpIcon, TrendingDownIcon } from "@heroicons/react/solid";
 
-import { Census, Utils } from '../../lib';
+import { Census } from '../../lib';
 
 export default async function Grid() {
   const data = await Census.fetchSerie('LNS13000000');
@@ -38,8 +38,8 @@ export default async function Grid() {
           <TableBody>
             {data.map((serie, index, dataSet) => {
               const key = `${index}-${serie.year}-${serie.period}`;
-              const dir = (serie.rate > 0) ? <TrendingUpIcon className="sm-icon" />
-                : (serie.rate < 0) ? <TrendingDownIcon className="sm-icon" /> : '';
+              const dir = (serie.rate! > 0) ? <TrendingUpIcon className="sm-icon" />
+                : (serie.rate! < 0) ? <TrendingDownIcon className="sm-icon" /> : '';
 
               return (
                 <>
@@ -51,7 +51,7 @@ export default async function Grid() {
                       <Text>{serie.periodName}</Text>
                     </TableCell>
                     <TableCell>
-                      <Text>{rate.toFixed(2)}% {dir}</Text>
+                      <Text>{serie.rate!.toFixed(2)}% {dir}</Text>
                     </TableCell>
                   </TableRow>
                 </>

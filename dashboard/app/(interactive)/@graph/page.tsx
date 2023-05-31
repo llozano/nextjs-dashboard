@@ -4,7 +4,7 @@ import React, { useState, cache } from 'react';
 import { Card, LineChart, Title, Toggle, ToggleItem } from "@tremor/react";
 import { CalculatorIcon, ReceiptTaxIcon } from "@heroicons/react/solid";
 
-import { Census, Utils } from '../../lib';
+import { Census } from '../../lib';
 
 /**
  * Value formatter resolver
