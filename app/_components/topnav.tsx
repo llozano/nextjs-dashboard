@@ -8,7 +8,7 @@ import { Flex } from "@tremor/react";
 const routes = require('../_config/topnav.json');
 
 export const TopNav = ({ children }: { children?: React.ReactNode }) => {
-  const segment = useSelectedLayoutSegment();
+  const segment = useSelectedLayoutSegment().replace('(interactive)', '');
 
   return (
     <>
