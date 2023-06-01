@@ -1,8 +1,6 @@
 'use client';
 
-import React, { useState, useTransition } from 'react';
 import { Card, Flex } from "@tremor/react";
-import { ChartBarIcon, TableIcon } from "@heroicons/react/solid";
 import { useSearchParams } from "next/navigation";
 
 import { Census } from '../lib';
@@ -12,7 +10,6 @@ export const preload = (seriesId: string) => {
 };
 
 export default function InteractiveLayout(props: any) {
-  // const [isPending] = useTransition();
 
   const seriesId = 'LNS13000000';
   preload(seriesId);
@@ -21,8 +18,7 @@ export default function InteractiveLayout(props: any) {
   const searchParams = useSearchParams();
   const viewDataset = (searchParams.get('tab') ?? 'graph') === 'dataset';
 
-
-  console.log('pew pew.3', searchParams.get('tab'), viewDataset);
+  console.log('pew pew.3', 'layout', searchParams.get('tab'), viewDataset, Date.now());
 
   return (
     <>

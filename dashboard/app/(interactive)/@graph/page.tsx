@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, cache } from 'react';
+import React, { useState } from 'react';
 import { Card, LineChart, Title, Toggle, ToggleItem } from "@tremor/react";
 import { CalculatorIcon, ReceiptTaxIcon } from "@heroicons/react/solid";
 
@@ -21,18 +21,20 @@ const numberFormatter = (value: number): string =>
 
 export default async function Graph() {
   const [category, setCategory] = useState('rate');
+
   const data = await Census.fetchSerie('LNS13000000');
 
   const handleToggleValueChange = (value: string): void => {
-    console.log('pew pew.2', value);
     setCategory(value);
   };
+
+  console.log('pew pew.5', 'graph', Date.now());
 
   return (
     <Card>
       <Title>Unemployment Growth for the last 10 years</Title>
 
-      <Toggle defaultValue={category} onValueChange={handleToggleValueChange}
+      <Toggle defaultValue={category} onValueChange={(value) => handleToggleValueChange(value)}
         className="mt-4">
         <ToggleItem value="rate" text="Rate (%)" icon={ReceiptTaxIcon} />
         <ToggleItem value="value" text="Thousands" icon={CalculatorIcon} />

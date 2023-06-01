@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 
 import { useState } from 'react';
 
@@ -11,27 +11,28 @@ import {
   TableBody,
   TableCell,
   Text,
-  Title
+  Title,
+  Divider
 } from "@tremor/react";
 import { TrendingUpIcon, TrendingDownIcon } from "@heroicons/react/solid";
 
 import { Census } from '../../lib';
 
 export default async function Grid() {
-  const data = await Census.fetchSerie('LNS13000000');
-  console.log('pew pew.1');
+  const data = await Census.fetchSerie('LNS13000000', 'desc');
+  console.log('pew pew.1', 'grid', Date.now());
 
   return (
     <>
       <Card className="mt-5 mb-5">
 
-        <Table className="mt-5">
+        <Table className="mt-5 h-96 overflow-y-auto">
 
           <TableHead>
             <TableRow>
-              <TableHeaderCell>Year</TableHeaderCell>
-              <TableHeaderCell>Month</TableHeaderCell>
-              <TableHeaderCell>Rate</TableHeaderCell>
+              <TableHeaderCell className="bg-white">Year</TableHeaderCell>
+              <TableHeaderCell className="bg-white">Month</TableHeaderCell>
+              <TableHeaderCell className="bg-white">Rate</TableHeaderCell>
             </TableRow>
           </TableHead>
 
@@ -60,6 +61,8 @@ export default async function Grid() {
           </TableBody>
 
         </Table>
+
+        <Divider />
       </Card>
     </>
   );

@@ -1,6 +1,12 @@
 import { cache } from 'react';
-import { CensusResponse } from '../_models/census-response.interface';
+import { CensusResponse, SerieData } from '../_models/census-response.interface';
 import { Utils } from './utils';
+
+interface SortDirection {
+  gr: number;
+  equal: number;
+  lw: number;
+}
 
 export class Census {
 
@@ -34,7 +40,7 @@ export class Census {
     }
   }
 
-  static fetchSerie = cache(async (serieId: string) => {
+  static fetchSerie = cache(async (serieId: string, sort: 'asc' | 'desc' = 'asc') => {
     const { Results: { series } } = await Census.fetchSeries([serieId]);
     // Select requested serie
     let data = series
@@ -48,11 +54,14 @@ export class Census {
         return serie;
       });
 
+      const dir: SortDirection = (sort === 'asc') ? { gr: 1, equal: 0, lw: -1}
+        : { gr: -1, equal: 0, lw: 1};
+
       // Sorting values
-      data.sort((a, b) => {
-        return (a.year > b.year) ? 1 : (a.year < b.year) ? -1
-          : (a.period > b.period) ? 1 : (a.period < b.period) ? -1 : 0;
-      });
+      const sortFn = (a: SerieData, b: SerieData) => (a.year > b.year) ? dir.gr : (a.year < b.year) ? dir.lw
+          : (a.period > b.period) ? dir.gr : (a.period < b.period) ? dir.lw : dir.equal;
+
+      data.sort(sortFn);
 
       return data;
   });

@@ -21,7 +21,7 @@ export default function InteractivePage(
   const updateSearchUrl = ({ tabValue } : { tabValue: string }) => {
     const params = new URLSearchParams(window.location.search);
 
-    console.log('pew pew.4.1', tabValue);
+    console.log('pew pew.4.1', 'main page', tabValue, Date.now());
     params.set('tab', tabValue);
 
     startTransition(() => {
