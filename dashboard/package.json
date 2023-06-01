@@ -1,6 +1,7 @@
 {
   "name": "dashboard",
   "version": "0.1.0",
+  "author": "Leonardo Lozano",
   "private": true,
   "scripts": {
     "dev": "next dev",

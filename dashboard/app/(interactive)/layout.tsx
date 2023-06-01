@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import { Card, Flex } from "@tremor/react";
 import { useSearchParams } from "next/navigation";
 

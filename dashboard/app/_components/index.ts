@@ -1,3 +1,3 @@
 export { FeatherIcon } from './feather-icon';
 export { TopNav } from './topnav';
-// export {} from './';
+export { Chart } from './chart';
