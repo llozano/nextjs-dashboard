@@ -1,0 +1,14 @@
+{
+	"links": [
+		{
+	    "id": 1,
+			"label": "Dataset",
+			"href": "/"
+		},
+		{
+	    "id": 2,
+			"label": "Contact",
+			"href": "/contact"
+		}
+	]
+}

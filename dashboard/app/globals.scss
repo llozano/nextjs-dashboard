@@ -1,0 +1,38 @@
+@use 'sass:map';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import './styles/theme.scss';
+
+
+.sm-icon {
+  height: 20px;
+  display: inline;
+}
+
+.feather {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+
+.table-size {
+  max-height: calc(70vh - 150px);
+}
+
+.int {
+  .top {
+    height: calc(50vh - 20px);
+    overflow-y: auto;
+  }
+
+  .bottom {
+    height: calc(50vh - 20px);
+  }
+}
