@@ -8,7 +8,7 @@ import { Flex } from "@tremor/react";
 const routes = require('../_config/topnav.json');
 
 export const TopNav = ({ children }: { children?: React.ReactNode }) => {
-  const segment = useSelectedLayoutSegment().replace('(interactive)', '');
+  const segment = useSelectedLayoutSegment()?.replace('(interactive)', '') || '';
 
   return (
     <>
@@ -26,7 +26,7 @@ export const TopNav = ({ children }: { children?: React.ReactNode }) => {
         <div className="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
           <div className="text-sm lg:flex-grow">
             {routes.links.map((route: any) => {
-              const active = (route.href.replace('/', '') === segment || '') ? 'text-teal-200' : '';
+              const active = (route.href.replace('/', '') === segment) ? 'text-teal-200' : '';
 
               return (
 

@@ -4,7 +4,7 @@ import { useRef, MutableRefObject, useState } from 'react';
 import { Button, Card } from "@tremor/react";
 import { PaperAirplaneIcon } from "@heroicons/react/outline";
 
-const errors = {
+const errors: {[key: string]: string } = {
   valueMissing: 'Field is required',
   tooLong: 'Field exceeds the max number of characters',
   typeMismatch: 'Invalid value'
@@ -32,7 +32,7 @@ const validateField = (state: ValidityState): Array<string> | null => {
  * HTML5 form validation. Collection of errors
  */
 const validateForm = (form: {[key: string]: MutableRefObject<any>}): {[key: string]: any } => {
-  const invalidFields = {};
+  const invalidFields: {[key: string]: string } = {};
   const fields = Object.keys(form);
 
   for (const field of fields) {
@@ -42,7 +42,7 @@ const validateForm = (form: {[key: string]: MutableRefObject<any>}): {[key: stri
     }
   }
 
-  const formResults = {};
+  const formResults: {[key: string]: any } = {};
   for (const [key, value] of Object.entries(invalidFields)) {
     formResults[key] = errors[value];
   }
@@ -57,7 +57,7 @@ export default function Contact() {
     focus:border-gray-500 focus:bg-white focus:ring-0`;
   const numOfRows = 5;
   const form = {
-    it: useRef(null),
+    it: useRef<HTMLFormElement>(null),
     fullname: useRef(null),
     email: useRef(null),
     comments: useRef(null),
@@ -81,7 +81,7 @@ export default function Contact() {
       const formJson = Object.fromEntries(formData.entries());
       console.log(formJson);
 
-      form.it.current.reset();
+      form.it.current?.reset();
     }
   };
 
@@ -93,22 +93,31 @@ export default function Contact() {
           <label className="block">
             <span className="text-gray-700">Full name</span>
             <input type="text" name="fullname" className={textClassName} placeholder=""
-              ref={form.fullname} required maxLength="300" />
-            <span className="text-xs text-red-500">{formValidation.fullname}</span>
+              ref={form.fullname} required maxLength={300} />
+            <span className="text-xs text-red-500">
+              { /** @ts-expect-error */ }
+              {formValidation.fullname}
+            </span>
           </label>
 
           <label className="block">
             <span className="text-gray-700">Email address</span>
             <input type="email" name="email" className={textClassName} placeholder="pewpew@email.com"
-              ref={form.email} required/>
-            <span className="text-xs text-red-500">{formValidation.email}</span>
+              ref={form.email} required maxLength={300} />
+            <span className="text-xs text-red-500">
+              { /** @ts-expect-error */ }
+              {formValidation.email}
+              </span>
           </label>
 
           <label className="block">
             <span className="text-gray-700">comments</span>
             <textarea name="comments" className={textClassName} rows={numOfRows}
-              ref={form.comments} maxLength="500"></textarea>
-            <span className="text-xs text-red-500">{formValidation.comments}</span>
+              ref={form.comments} maxLength={500}></textarea>
+            <span className="text-xs text-red-500">
+              { /** @ts-expect-error */ }
+              {formValidation.comments}
+            </span>
           </label>
 
           <div className="block">
