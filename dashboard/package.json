@@ -1,7 +1,9 @@
 {
-  "name": "dashboard",
+  "name": "dash-cool",
+  "description": "React app using nextjs. Support of route groups and parallel routes",
   "version": "0.1.0",
   "author": "Leonardo Lozano",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "next dev",
